@@ -13,7 +13,7 @@ Then run
 
 `npm install`
 
-to install the dependencies. After this is complete, run with 
+to install the dependencies. After this is complete run 
 
 `npm start`
 
