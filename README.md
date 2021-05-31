@@ -2,7 +2,7 @@
 
 Totality is an easy-to-use goal/habit tracker for iOS and Android developed using React Native, Expo and Formik.
 
-At the moment there is only a daily tracker that has to be reset manually, but weekly, monthly and annual trackers are on the way along with history! There may even be integrations with the iOS Health API so stay tuned👀
+At the moment there is only a daily tracker that has to be reset manually, but automatic resets and weekly, monthly and annual trackers are on the way along with history! There may even be integrations with the iOS Health API so stay tuned👀
 
 And let me know if you have any ideas or found any bugs :)
 
