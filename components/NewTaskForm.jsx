@@ -4,11 +4,7 @@ import { Formik, useField } from 'formik'
 
 const NewTaskForm = ({handleAddtask}) => {
     return (
-        // <View >
-        <View
-            style={styles.formContainer} 
-            // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+        <View>
             <Formik
                 initialValues={{ text: '', goal: ''}}
                 validate={values => {
@@ -61,7 +57,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderColor: '#c0c0c0',
         borderWidth: 1,
-        borderRadius: 60,
+        borderRadius: 50,
         width: '95%',
 
     },

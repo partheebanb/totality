@@ -61,7 +61,7 @@ export default function App() {
     }
   }
 
-  const completeTask = (index) => {
+  const removeTask = (index) => {
     let tempItems = [...taskItems]
     tempItems.splice(index, 1)
     setTaskItems(tempItems)
@@ -83,6 +83,7 @@ export default function App() {
               onIncrement={(key) => incrementCompleted(key)} 
               onDecrement={(key) => decrementCompleted(key)} 
               index={index}
+              onRemove={removeTask}
               key={index} 
               />
           )
@@ -131,25 +132,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 10
   },
-  // input : {
-  //   paddingVertical: 15,
-  //   paddingHorizontal: 15,
-  //   width: 250,
-  //   backgroundColor: 'white',
-  //   borderColor: '#c0c0c0',
-  //   borderWidth: 1,
-  //   borderRadius: 60
-  // },
-  // form: {
-  //   start: 60,
-  //   width: 60,
-  //   height: 60,
-  //   backgroundColor: 'white',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   borderColor: '#c0c0c0',
-  //   borderWidth: 1,
-  //   borderRadius: 60 
-  // },
+
 
 });
