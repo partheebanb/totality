@@ -24,7 +24,9 @@ The Expo development environment will open up in your browser. Choose 'Run in we
 
 <img src="./screenshots/default.PNG" height=320 width=180/>
 
-### You can add tasks
+### You can add goals
+
+Add any goal you want! You can also set your own targets.
 
 <div>
   <img src="./screenshots/keyboard.PNG" height=320 width=180/>
@@ -34,6 +36,8 @@ The Expo development environment will open up in your browser. Choose 'Run in we
 
 
 ### Update them using the + and - buttons
+
+The UI for each goal is color-coded. Pink means you've completed less than 50% of your goal, yellow means less than 100% and green means's you've completed that goal. The tracker at the top updates automatically whenever you completed a goal.
 
 <img src="./screenshots/updatedTasks.PNG" height=320 width=180/>
 
