@@ -7,7 +7,7 @@ At the moment there is only a daily tracker that has to be reset manually, but w
 
 ### Installation Guide
 
-To use on your local machine first install <a href="https://nodejs.org/en"/>Node.js</>
+To use on your local machine first install <a href="https://nodejs.org/en">Node.js</>
 
 Then run 
 
