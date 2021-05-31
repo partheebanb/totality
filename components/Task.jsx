@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 5
     },
     addButton: {
-        backgroundColor: 'green',  
+        backgroundColor: '#37D099',  
     },
     subtractButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#FF3636',
     },
 })
 

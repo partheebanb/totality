@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
 
 import Task from './components/Task'
-// import for from 'formik'
+import NewTaskForm from './components/NewTaskForm'
 
 export default function App() {
 
@@ -24,11 +24,19 @@ export default function App() {
   const [totalTasks, setTotalTasks] = useState(taskItems.length)
 
   useEffect(() => {
-    updateFinishedTasks(),
+    updateTaskCount(),
     [taskItems]
   })
 
-  const updateFinishedTasks = () => {
+  const addTask = (values) => {
+    const task = {
+      text: values.text,
+      goal: values.goal,
+      completed: 0
+    }
+    setTaskItems([...taskItems, task])
+  }
+  const updateTaskCount = () => {
     let finished = 0
     setTimeout(() => {}, 20)
     taskItems.map((item) => {
@@ -38,6 +46,7 @@ export default function App() {
       }
     })
     setFinishedTasks(finished)
+    setTotalTasks(taskItems.length)
     console.log(finishedTasks)
 
   }
@@ -92,11 +101,14 @@ export default function App() {
               />
           )
         })}
-
+      </View>
+      
+      <View style={styles.form}>
+        <NewTaskForm handleAddtask={(values) => addTask(values)}/>
       </View>
 
 
-    {/* <KeyboardAvoidingView 
+    {/*  <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.writeTaskWrapper}  
     >
@@ -138,12 +150,12 @@ const styles = StyleSheet.create({
   items: {
     marginTop: 30
   },
-  writeTaskWrapper: {
+  form: {
     position: 'absolute',
-    bottom: 35,
+    bottom: 60,
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    // justifyContent: 'space-around',
     alignItems: 'center'
   },
   input : {
@@ -155,15 +167,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 60
   },
-  addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#c0c0c0',
-    borderWidth: 1,
-    borderRadius: 60 
-  },
+  // form: {
+  //   start: 60,
+  //   width: 60,
+  //   height: 60,
+  //   backgroundColor: 'white',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   borderColor: '#c0c0c0',
+  //   borderWidth: 1,
+  //   borderRadius: 60 
+  // },
 
 });
