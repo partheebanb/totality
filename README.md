@@ -4,5 +4,5 @@ Totality is an easy-to-use wellbeing tracker for iOS and Android developed using
 
 ### Here's the default view
 
-<img src="./screenshots/default.png"
+<img src="https://github.com/partheebanb/totality/tree/main/screenshots/default.png"
      alt="Default"/>
