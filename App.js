@@ -8,22 +8,12 @@ import NewTaskForm from './components/NewTaskForm'
 export default function App() {
 
   const [task, setTask] = useState()
-  const [taskItems, setTaskItems] = useState([
-    {
-      text: 'Bike',
-      completed: 0,
-      goal: 5
-    }, {
-      text: 'Read',
-      completed: 0,
-      goal: 5
-    }
-  ])
-  // const [finishedTasks, setFinishedTasks] = useState(0)
+  const [taskItems, setTaskItems] = useState([])
   const [finishedTasks, setFinishedTasks] = useState(0)
   const [totalTasks, setTotalTasks] = useState(taskItems.length)
 
   useEffect(() => {
+    // keeps track of tasks completed and total tasks
     updateTaskCount(),
     [taskItems]
   })
@@ -51,6 +41,7 @@ export default function App() {
 
   }
 
+  // increments the progress of a certain task
   const incrementCompleted = (index) => {
     const item = taskItems[index]
     const newItem = {...item, completed: item.completed + 1} 
@@ -59,6 +50,7 @@ export default function App() {
     setTaskItems(newItems)
   }
 
+  // decrements the progress of a certain task
   const decrementCompleted = (index) => {
     const item = taskItems[index]
     if (item.completed > 0) {
@@ -67,12 +59,6 @@ export default function App() {
       newItems.splice(index, 1, newItem)
       setTaskItems(newItems,)
     }
-  }
-
-  const handleAddTask = () => {
-    Keyboard.dismiss()
-    setTaskItems([...taskItems, task])
-    setTask(null)
   }
 
   const completeTask = (index) => {
@@ -103,23 +89,9 @@ export default function App() {
         })}
       </View>
       
-      <View style={styles.form}>
+      <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <NewTaskForm handleAddtask={(values) => addTask(values)}/>
-      </View>
-
-
-    {/*  <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.writeTaskWrapper}  
-    >
-      
-      <TextInput style={styles.input} placeholder={'New Task'} value={task} onChangeText={text => setTask(text)}/>
-      <TouchableOpacity onPress={() => handleAddTask()}>
-        <View style={styles.addWrapper}>
-          <Text style={styles.addText}>+</Text>
-        </View>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>  */}
+      </KeyboardAvoidingView>
     </View>
     
   );
@@ -152,21 +124,22 @@ const styles = StyleSheet.create({
   },
   form: {
     position: 'absolute',
-    bottom: 60,
+    bottom: 50,
     width: '100%',
     flexDirection: 'row',
-    // justifyContent: 'space-around',
-    alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10
   },
-  input : {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    width: 250,
-    backgroundColor: 'white',
-    borderColor: '#c0c0c0',
-    borderWidth: 1,
-    borderRadius: 60
-  },
+  // input : {
+  //   paddingVertical: 15,
+  //   paddingHorizontal: 15,
+  //   width: 250,
+  //   backgroundColor: 'white',
+  //   borderColor: '#c0c0c0',
+  //   borderWidth: 1,
+  //   borderRadius: 60
+  // },
   // form: {
   //   start: 60,
   //   width: 60,
