@@ -18,7 +18,7 @@ to install the dependencies. After this is complete run
 
 `npm start`
 
-The Expo development environment will open up in your browser. Choose 'Run in web browser' to run locally. You can also use a simulator or install Expo Go on your mobile device and scane the QR code provided to run it on your phone.
+The Expo development environment will open up in your browser. Choose 'Run in web browser' to run locally. You can also use a simulator or install Expo Go on your mobile device and scan the QR code provided by Expo to run directly it on your phone.
 
 ### Here's the default view
 
