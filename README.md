@@ -5,7 +5,7 @@ Totality is an easy-to-use wellbeing tracker for iOS and Android developed using
 ### Here's the default view
 
 ![Default](https://github.com/partheebanb/totality/tree/main/screenshots/default.PNG)
-
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ### You can add tasks
 
 ![Keyboard](https://github.com/partheebanb/totality/tree/main/screenshots/keyboard.PNG)
