@@ -42,7 +42,8 @@ export default function App() {
         {/* </View> */}
 
       <View style={styles.tasksWrapper}>
-          <Task text='Read' done='5' goal='30'/>
+          <Task text='Read' goal='30'/>
+          <Task text='Bike' goal='10'/>
       </View>
 
 
