@@ -66,6 +66,15 @@ export default function App() {
     tempItems.splice(index, 1)
     setTaskItems(tempItems)
   }
+
+  const resetTasks = () => {
+    // let tempItems = [...taskItems]
+    const tempItems = taskItems.map((item) => (
+      {...item, completed: 0}
+    ))
+
+    setTaskItems(tempItems)
+  }
   return (
     <View style={styles.container}>
         <View style={styles.header}>
@@ -93,19 +102,63 @@ export default function App() {
       <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <NewTaskForm handleAddtask={(values) => addTask(values)}/>
       </KeyboardAvoidingView>
+
+      <View style={styles.dayContainer}>
+        <TouchableOpacity style={[styles.startDay, styles.day]} onTouchStart={resetTasks}>
+          <Text style={styles.dayText}>
+            START DAY
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.endDay, styles.day]} onPress={resetTasks}>
+          <Text style={styles.dayText}>
+            END DAY
+          </Text>
+        </TouchableOpacity>
+        
+      </View>
     </View>
     
   );
 }
 
 const styles = StyleSheet.create({
+  dayContainer: {
+    width: '90%',
+    flexDirection: 'row',
+    position: 'absolute',
+    alignItems: 'center',
+    // alignContent: 'center'
+    justifyContent: 'space-between',
+    bottom: 20,
+    marginHorizontal: '5%'    
+  },
+  day: {
+    width: '47.5%',
+    height: 40,
+    // position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // marginHorizontal: '30%',
+    borderRadius: 10
+  },
+  endDay: {
+    backgroundColor: '#FF9595',
+  },
+  startDay: {
+    backgroundColor: '#37D099',  
+  },
+  dayText: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  },  
   container: {
     flex: 1,
     backgroundColor: '#e8eaed',
   },
   tasksWrapper: {
-    paddingTop: 20,
-    paddingHorizontal: 20
+    marginTop: 20,
+    marginHorizontal: '5%',
+    width: '90%'
   },
   header: {
     padding: 20,
@@ -125,12 +178,12 @@ const styles = StyleSheet.create({
   },
   form: {
     position: 'absolute',
-    bottom: 50,
-    width: '100%',
+    bottom: 80,
+    // width: '90%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10
+    // marginHorizontal: '5%'
   },
 
 

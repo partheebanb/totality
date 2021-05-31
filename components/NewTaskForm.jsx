@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
-import { StyleSheet, Button, TextInput, View, Text, KeyboardAvoidingView, Keyboard} from 'react-native'
-import { Formik, useField } from 'formik'
+import React from 'react'
+import { StyleSheet, Button, TextInput, View, Keyboard, TouchableOpacity, Text} from 'react-native'
+import { Formik } from 'formik'
+
+import CircleButton from './CircleButton'
 
 const NewTaskForm = ({handleAddtask}) => {
     return (
@@ -28,21 +30,27 @@ const NewTaskForm = ({handleAddtask}) => {
             >
                 {props => (
                 <View style={styles.formContainer}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='New Task'
-                        onChangeText={props.handleChange('text')}
-                        value={props.values.text}
-                    />
+                    <View style={styles.inputContainer}>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='New Task'
+                            onChangeText={props.handleChange('text')}
+                            value={props.values.text}
+                        />
 
-                    <TextInput
-                        style={styles.goalInput}
-                        placeholder='Goal'
-                        onChangeText={props.handleChange('goal')}
-                        value={props.values.goal}
-                    />       
+                        <TextInput
+                            style={styles.goalInput}
+                            placeholder='Goal'
+                            onChangeText={props.handleChange('goal')}
+                            value={props.values.goal}
+                        />       
+                    </View>
 
-                    <Button style={styles.addButton} color='maroon' title="Submit" onPress={props.handleSubmit} /> 
+                    <TouchableOpacity style={styles.addButton} onPress={props.handleSubmit}>
+                        <Text>
+                            +
+                        </Text>
+                    </TouchableOpacity>
                 </View>
                 )}
             </Formik>
@@ -54,25 +62,35 @@ const NewTaskForm = ({handleAddtask}) => {
 const styles = StyleSheet.create({
     formContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderColor: '#c0c0c0',
-        borderWidth: 1,
-        borderRadius: 50,
-        width: '95%',
+        justifyContent: 'space-around',
+        width: '90%',
+        marginHorizontal: '5%'
 
     },
+    inputContainer: {
+        width: '80%',
+        borderColor: '#c0c0c0',
+        borderWidth: 1,
+        borderRadius: 10,        
+        flexDirection: 'row'
+    },  
     textInput: {
         margin: 10,
-        marginLeft: 20,
-        width: '50%'
+        // marginLeft: 20,
+        width: '70%'
     },
     goalInput: {
         margin: 10,
-        width: '10%'
+        width: '30%'
     },
     addButton: {
         margin: 10,
-        width: 50
+        height: 25,
+        width: 25,
+        borderRadius: 12,
+        backgroundColor: '#37D099',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 
 })
