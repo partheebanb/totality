@@ -26,9 +26,12 @@ The Expo development environment will open up in your browser. Choose 'Run in we
 
 ### You can add tasks
 
-<img src="./screenshots/keyboard.PNG" height=320 width=180/>
+<div>
+  <img src="./screenshots/keyboard.PNG" height=320 width=180/>
 
-<img src="./screenshots/addNewTasks.PNG" height=320 width=180/>
+  <img src="./screenshots/addNewTasks.PNG" height=320 width=180/>
+</div>
+
 
 ### Update them using the + and - buttons
 
