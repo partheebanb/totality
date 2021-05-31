@@ -1,13 +1,64 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
 
 import Task from './components/Task'
+// import for from 'formik'
 
 export default function App() {
 
   const [task, setTask] = useState()
-  const [taskItems, setTaskItems] = useState([])
+  const [taskItems, setTaskItems] = useState([
+    {
+      text: 'Bike',
+      completed: 0,
+      goal: 5
+    }, {
+      text: 'Read',
+      completed: 0,
+      goal: 5
+    }
+  ])
+  // const [finishedTasks, setFinishedTasks] = useState(0)
+  const [finishedTasks, setFinishedTasks] = useState(0)
+  const [totalTasks, setTotalTasks] = useState(taskItems.length)
+
+  useEffect(() => {
+    updateFinishedTasks(),
+    [taskItems]
+  })
+
+  const updateFinishedTasks = () => {
+    let finished = 0
+    setTimeout(() => {}, 20)
+    taskItems.map((item) => {
+      if (item.completed >= item.goal) {
+        console.log(item.completed)
+        finished++
+      }
+    })
+    setFinishedTasks(finished)
+    console.log(finishedTasks)
+
+  }
+
+  const incrementCompleted = (index) => {
+    const item = taskItems[index]
+    const newItem = {...item, completed: item.completed + 1} 
+    let newItems = [...taskItems]
+    newItems.splice(index, 1, newItem)
+    setTaskItems(newItems)
+  }
+
+  const decrementCompleted = (index) => {
+    const item = taskItems[index]
+    if (item.completed > 0) {
+      const newItem = {...item, completed: item.completed - 1} 
+      let newItems = [...taskItems]
+      newItems.splice(index, 1, newItem)
+      setTaskItems(newItems,)
+    }
+  }
 
   const handleAddTask = () => {
     Keyboard.dismiss()
@@ -23,31 +74,27 @@ export default function App() {
   return (
     <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.completedTaskCount}>1/3</Text>
+          <Text style={styles.completedTaskCount}>{finishedTasks}/{totalTasks}</Text>
           <Text style={styles.titleText}>TASKS COMPLETED TODAY</Text>
         </View>
 
-        {/* <View style={styles.items}>
-          {
-            taskItems.map((item, index) => {
-              return (
-                <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                  <Task text={item}/>fif
-                </TouchableOpacity>
-              )
-            })
-
-          }
-          
-        {/* </View> */}
-
       <View style={styles.tasksWrapper}>
-          <Task text='Read' goal='30'/>
-          <Task text='Bike' goal='10'/>
+        {taskItems.map((item, index) => {
+          return (
+            <Task 
+              text={item.text} 
+              completed={item.completed} 
+              goal={item.goal} 
+              onIncrement={(key) => incrementCompleted(key)} 
+              onDecrement={(key) => decrementCompleted(key)} 
+              index={index}
+              key={index} 
+              />
+          )
+        })}
+
       </View>
 
-
-    {/* New Task */}
 
     {/* <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -117,9 +164,6 @@ const styles = StyleSheet.create({
     borderColor: '#c0c0c0',
     borderWidth: 1,
     borderRadius: 60 
-  },
-  addText: {
-
   },
 
 });

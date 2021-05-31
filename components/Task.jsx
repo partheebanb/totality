@@ -3,23 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-nativ
 
 
 
-const Task = ({text, goal}) => {
-
-    const [completed, setCompleted] = useState(0)
-
-    const incrementCompleted = () => {
-        setCompleted(completed + 1)
-    }
-
-    const decrementCompleted = () => {
-        if (completed > 0) {
-            setCompleted(completed - 1)
-        }
-    }
-
+const Task = ({text, completed, goal, onIncrement, onDecrement, index}) => {
 
     return (
-    <View style={styles.item}>
+    <View style={[completed >= goal ? styles.green :(completed >= goal/2 ? styles.yellow : styles.red), styles.item]}>
         <Text style={styles.taskText}>{text}</Text>
         <View style={styles.itemProgress}>
             <Text style={styles.itemProgressText}>{completed}</Text>
@@ -28,10 +15,10 @@ const Task = ({text, goal}) => {
         </View>
 
         <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.addButton} onPress={incrementCompleted}>
+            <TouchableOpacity style={[styles.button, styles.addButton]} onPress={() => onIncrement(index)}>
                 <Text>+</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.subtractButton} onPress={decrementCompleted}>
+            <TouchableOpacity style={[styles.button, styles.subtractButton]} onPress={() => onDecrement(index)}>
                 <Text>-</Text>
             </TouchableOpacity>
         </View>
@@ -40,11 +27,19 @@ const Task = ({text, goal}) => {
 }
 
 const styles = StyleSheet.create({
+    green: {
+        backgroundColor: '#41FFBA'
+    }, 
+    red: {
+        backgroundColor: '#FF9595'
+    }, 
+    yellow: {
+        backgroundColor: '#FFE974'
+    },
     item: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: '#fff',
         padding: 15,
         borderRadius: 5,
         marginVertical: 7,
@@ -64,46 +59,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    addButton: {
-        backgroundColor: 'green',
+    button: {
         height: 25,
         width: 25,
         borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center',
         marginHorizontal: 5
+    },
+    addButton: {
+        backgroundColor: 'green',  
     },
     subtractButton: {
         backgroundColor: 'red',
-        height: 25,
-        width: 25,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginHorizontal: 5
-
     },
-    itemLeft: {
-        flexDirection: 'row',
-        // alignItems: 'center',
-        flexWrap: 'wrap'
-
-    },
-    square: {
-        width: 24,
-        height: 24,
-        backgroundColor: '#55bcf6',
-        // opacity: 0.4,
-        marginRight: 15,
-        borderRadius: 5
-    },
-    circular: {
-        height: 12,
-        width: 12,
-        borderColor: '#55bcf6',
-        borderWidth: 2,
-        borderRadius: 5
-    }
 })
 
 
