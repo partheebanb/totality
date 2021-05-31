@@ -37,7 +37,7 @@ Add any goal you want! You can also set your own targets.
 
 ### Update them using the + and - buttons
 
-The UI for each goal is color-coded. Pink means you've completed less than 50% of your goal, yellow means less than 100% and green means's you've completed that goal. The tracker at the top updates automatically whenever you complete a goal.
+The UI for each goal is color-coded. It's pink if you've completed less than 50% of your goal, yellow if less than 100% and green if you've completed that goal. The tracker at the top updates automatically whenever you complete a goal.
 
 <img src="./screenshots/updatedTasks.PNG" height=320 width=180/>
 
