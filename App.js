@@ -2,97 +2,102 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
 
-import Task from './components/Task'
-import NewTaskForm from './components/NewTaskForm'
+import Goal from './components/Goal'
+import NewGoalForm from './components/NewGoalForm'
+
+import colors from './assets/colors'
 
 export default function App() {
 
-  const [task, setTask] = useState()
-  const [taskItems, setTaskItems] = useState([])
-  const [finishedTasks, setFinishedTasks] = useState(0)
-  const [totalTasks, setTotalTasks] = useState(taskItems.length)
+  const [goal, setGoal] = useState()
+  const [goalItems, setGoalItems] = useState([])
+  const [finishedGoals, setFinishedGoals] = useState(0)
+  const [totalGoals, setTotalGoals] = useState(goalItems.length)
 
   useEffect(() => {
-    // keeps track of tasks completed and total tasks
-    updateTaskCount(),
-    [taskItems]
+    // keeps track of goals completed and total goals
+    updateGoalCount(),
+    [goalItems]
   })
 
-  const addTask = (values) => {
-    const task = {
+  const addGoal = (values) => {
+    const goal = {
       text: values.text,
-      goal: values.goal,
+      target: values.goal,
       completed: 0
     }
-    setTaskItems([...taskItems, task])
+    setGoalItems([...goalItems, goal])
   }
-  const updateTaskCount = () => {
+
+  const updateGoalCount = () => {
     let finished = 0
     setTimeout(() => {}, 20)
-    taskItems.map((item) => {
+    goalItems.map((item) => {
       if (item.completed >= item.goal) {
         console.log(item.completed)
         finished++
       }
     })
-    setFinishedTasks(finished)
-    setTotalTasks(taskItems.length)
-    console.log(finishedTasks)
+    setFinishedGoals(finished)
+    setTotalGoals(goalItems.length)
+    console.log(finishedGoals)
 
   }
 
-  // increments the progress of a certain task
+  // increments the progress of goal at given index
   const incrementCompleted = (index) => {
-    const item = taskItems[index]
+    const item = goalItems[index]
     const newItem = {...item, completed: item.completed + 1} 
-    let newItems = [...taskItems]
+    let newItems = [...goalItems]
     newItems.splice(index, 1, newItem)
-    setTaskItems(newItems)
+    setGoalItems(newItems)
   }
 
-  // decrements the progress of a certain task
+  // decrements the progress of goal at given index
   const decrementCompleted = (index) => {
-    const item = taskItems[index]
+    const item = goalItems[index]
     if (item.completed > 0) {
       const newItem = {...item, completed: item.completed - 1} 
-      let newItems = [...taskItems]
+      let newItems = [...goalItems]
       newItems.splice(index, 1, newItem)
-      setTaskItems(newItems,)
+      setGoalItems(newItems,)
     }
   }
 
-  const removeTask = (index) => {
-    let tempItems = [...taskItems]
+  // remove goal at given index
+  const removeGoal = (index) => {
+    let tempItems = [...goalItems]
     tempItems.splice(index, 1)
-    setTaskItems(tempItems)
+    setGoalItems(tempItems)
   }
 
-  const resetTasks = () => {
-    // let tempItems = [...taskItems]
-    const tempItems = taskItems.map((item) => (
+  // reset the progress on
+  const resetGoals = () => {
+    // let tempItems = [...goalItems]
+    const tempItems = goalItems.map((item) => (
       {...item, completed: 0}
     ))
 
-    setTaskItems(tempItems)
+    setGoalItems(tempItems)
   }
   return (
     <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.completedTaskCount}>{finishedTasks}/{totalTasks}</Text>
-          <Text style={styles.titleText}>TASKS COMPLETED TODAY</Text>
+          <Text style={styles.completedGoalCount}>{finishedGoals}/{totalGoals}</Text>
+          <Text style={styles.titleText}>GOALS COMPLETED TODAY</Text>
         </View>
 
-      <View style={styles.tasksWrapper}>
-        {taskItems.map((item, index) => {
+      <View style={styles.goalsWrapper}>
+        {goalItems.map((item, index) => {
           return (
-            <Task 
+            <Goal 
               text={item.text} 
               completed={item.completed} 
-              goal={item.goal} 
+              target={item.target} 
               onIncrement={(key) => incrementCompleted(key)} 
               onDecrement={(key) => decrementCompleted(key)} 
               index={index}
-              onRemove={removeTask}
+              onRemove={removeGoal}
               key={index} 
               />
           )
@@ -100,16 +105,16 @@ export default function App() {
       </View>
       
       <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <NewTaskForm handleAddtask={(values) => addTask(values)}/>
+        <NewGoalForm handleAddGoal={(values) => addGoal(values)}/>
       </KeyboardAvoidingView>
 
       <View style={styles.dayContainer}>
-        <TouchableOpacity style={[styles.startDay, styles.day]} onTouchStart={resetTasks}>
+        <TouchableOpacity style={[styles.startDay, styles.day]} onTouchStart={resetGoals}>
           <Text style={styles.dayText}>
             START DAY
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.endDay, styles.day]} onPress={resetTasks}>
+        <TouchableOpacity style={[styles.endDay, styles.day]} onPress={resetGoals}>
           <Text style={styles.dayText}>
             END DAY
           </Text>
@@ -142,10 +147,10 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   endDay: {
-    backgroundColor: '#FF9595',
+    backgroundColor: colors.pink,
   },
   startDay: {
-    backgroundColor: '#37D099',  
+    backgroundColor: colors.green,  
   },
   dayText: {
     fontSize: 24,
@@ -153,9 +158,9 @@ const styles = StyleSheet.create({
   },  
   container: {
     flex: 1,
-    backgroundColor: '#e8eaed',
+    backgroundColor: 'white',
   },
-  tasksWrapper: {
+  goalsWrapper: {
     marginTop: 20,
     marginHorizontal: '5%',
     width: '90%'
@@ -163,9 +168,9 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
     paddingBottom: 10,
-    backgroundColor: '#41FFBA'
+    backgroundColor: 'white'
   },
-  completedTaskCount: {
+  completedGoalCount: {
     fontSize: 72,
     fontWeight: '900'
   },

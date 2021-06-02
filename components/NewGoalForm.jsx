@@ -3,27 +3,28 @@ import { StyleSheet, Button, TextInput, View, Keyboard, TouchableOpacity, Text} 
 import { Formik } from 'formik'
 
 import CircleButton from './CircleButton'
+// import ''
 
-const NewTaskForm = ({handleAddtask}) => {
+const NewGoalForm = ({handleAddGoal}) => {
     return (
         <View>
             <Formik
-                initialValues={{ text: '', goal: ''}}
+                initialValues={{ text: '', target: ''}}
                 validate={values => {
                     const errors = {};
                     if (!values.text) {
                       errors.text = 'Required';
-                    } else if (!values.goal) {
-                      errors.goal = 'Required';
-                    } else if (Number.isNaN(Number(values.goal))) {
-                        errors.goal = 'Goal must be a number'
+                    } else if (!values.target) {
+                      errors.target = 'Required';
+                    } else if (Number.isNaN(Number(values.target))) {
+                        errors.target = 'Target must be a number'
                     }
                     return errors;
            
                   }}
                 onSubmit={(values) => {
                     console.log(values)
-                    handleAddtask(values)
+                    handleAddGoal(values)
                     values = {}
                     Keyboard.dismiss()
                 }}
@@ -33,16 +34,16 @@ const NewTaskForm = ({handleAddtask}) => {
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder='New Task'
+                            placeholder='Create a new goal!'
                             onChangeText={props.handleChange('text')}
                             value={props.values.text}
                         />
 
                         <TextInput
                             style={styles.goalInput}
-                            placeholder='Goal'
-                            onChangeText={props.handleChange('goal')}
-                            value={props.values.goal}
+                            placeholder='Target'
+                            onChangeText={props.handleChange('target')}
+                            value={props.values.target}
                         />       
                     </View>
 
@@ -88,10 +89,10 @@ const styles = StyleSheet.create({
         height: 25,
         width: 25,
         borderRadius: 12,
-        backgroundColor: '#37D099',
+        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
     }
 
 })
-export default NewTaskForm
+export default NewGoalForm
