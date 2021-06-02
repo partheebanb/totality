@@ -131,12 +131,6 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30
     }
-    // addButton: {
-    //     backgroundColor: '#37D099',  
-    // },
-    // subtractButton: {
-    //     backgroundColor: '#FF3636',
-    // },
 })
 
 
