@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
 
 import Goal from '../components/Goal'
@@ -8,16 +8,16 @@ import colors from '../assets/colors'
 
 const MainPage = () => {
 
-  const [goal, setGoal] = useState()
   const [goalItems, setGoalItems] = useState([])
   const [finishedGoals, setFinishedGoals] = useState(0)
   const [totalGoals, setTotalGoals] = useState(goalItems.length)
+  const timer = useRef(null)
 
-  useEffect(() => {
-    // keeps track of goals completed and total goals
-    updateGoalCount(),
-    [goalItems]
-  })
+  // useEffect(() => {
+  //   // keeps track of goals completed and total goals
+  //   updateGoalCount(),
+  //   [goalItems]
+  // })
 
   const addGoal = (values) => {
     const goal = {
@@ -33,23 +33,31 @@ const MainPage = () => {
     setTimeout(() => {}, 20)
     goalItems.map((item) => {
       if (item.completed >= item.target) {
-        console.log(item.completed)
         finished++
       }
     })
     setFinishedGoals(finished)
     setTotalGoals(goalItems.length)
-    console.log(finishedGoals)
 
   }
 
   // increments the progress of goal at given index
-  const incrementCompleted = (index) => {
+  const incrementCompleted = (index, completed=-1, loop=true) => {
     const item = goalItems[index]
-    const newItem = {...item, completed: item.completed + 1} 
+    console.log(completed)
+
+    let newItem = item
+    completed >= 0 ?  newItem = {...item, completed: item.completed + 1} : {...item, completed: completed + 1}
     let newItems = [...goalItems]
     newItems.splice(index, 1, newItem)
     setGoalItems(newItems)
+    timer.current = setTimeout(() => incrementCompleted(index, completed + 1, false), 200)
+    
+    
+    console.log(item)
+    // timer.current = setTimeout(() => incrementCompleted(index, false), 200)
+    
+    
   }
 
   // decrements the progress of goal at given index
@@ -59,8 +67,13 @@ const MainPage = () => {
       const newItem = {...item, completed: item.completed - 1} 
       let newItems = [...goalItems]
       newItems.splice(index, 1, newItem)
-      setGoalItems(newItems,)
+      setGoalItems(newItems)
     }
+  }
+
+  // stop the timer after longpress
+  const stopTimer = () => {
+    clearTimeout(timer.current)
   }
 
   // remove goal at given index
@@ -95,6 +108,7 @@ const MainPage = () => {
               target={item.target} 
               onIncrement={(key) => incrementCompleted(key)} 
               onDecrement={(key) => decrementCompleted(key)} 
+              onPressOut={stopTimer}
               index={index}
               onRemove={removeGoal}
               key={index} 

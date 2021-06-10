@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native'
+import { View, Text, StyleSheet, Pressable, TouchableOpacity, TextInput, Image } from 'react-native'
 
 import colors from '../assets/colors'
 
-const Goal = ({text, completed, target, onIncrement, onDecrement, index, onRemove}) => {
+const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, index, onRemove}) => {
 
     // let timer = null
 
@@ -41,30 +41,28 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, index, onRemov
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity 
+                <Pressable 
                     style={[styles.button]} 
-                    onPress={() => onIncrement(index)} 
-                    // onPressIn={incPress} 
-                    // onPressOut={stopPress}
+                    onPressIn={() => onIncrement(index, completed)} 
+                    onPressOut={onPressOut}
                 >
                     <Image 
                         style={styles.buttonImage}
                         source={require('../assets/greenPlus.png')}
                     />
-                </TouchableOpacity>
-                <TouchableOpacity 
+                </Pressable>
+                <Pressable 
                     style={[styles.button]} 
                     onPress={() => onDecrement(index)}
-                    // onPressIn={decPress} 
-                    // onPressOut={stopPress}
+                    // onPressOut={onPressOut}
                 >
                     <Image 
                         style={styles.buttonImage}
                         source={require('../assets/pinkMinus.png')}
                     />
-                </TouchableOpacity>
+                </Pressable>
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity >
     )
 }
 

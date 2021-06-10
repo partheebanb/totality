@@ -18,6 +18,7 @@ const NewGoalForm = ({handleAddGoal}) => {
                       errors.target = 'Required';
                     } else if (Number.isNaN(Number(values.target))) {
                         errors.target = 'Target must be a number'
+                        // TODO validate negative numbers
                     }
                     return errors;
            
