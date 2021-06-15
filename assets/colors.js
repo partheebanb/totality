@@ -1,7 +1,21 @@
 export default colors = {
-    green: '#41FFBA',
-    pink: '#FF9595',
-    yellow: '#FFE974',
-    grey: '#c4c4c4'
+    green: {
+        primary: '#41FFBA',
+        secondary: '#09BE7D'
+    },
+    pink: {
+        primary: '#FF9595',
+        secondary: '#D83434'
+    },
+    yellow: {
+        primary: '#FFD700',
+        secondary: '#AA9700'
+    },
+    grey: '#c4c4c4',
+
+    darkMode: {
+        primary: '#353535',
+        secondary: '#666666'
+    }
     
 }

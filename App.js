@@ -6,7 +6,8 @@ import NewGoalForm from './screens/NewGoalForm'
 const App = () => {
 
   return (
-    <NewGoalForm />
+    // <NewGoalForm />
+    <MainPage />
   )
 }
 

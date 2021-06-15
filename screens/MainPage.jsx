@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef } from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View, ScrollView } from 'react-native';
 
 import Goal from '../components/Goal'
 import NewGoalForm from '../components/NewGoalForm'
@@ -13,11 +13,11 @@ const MainPage = () => {
   const [totalGoals, setTotalGoals] = useState(goalItems.length)
   const timer = useRef(null)
 
-  // useEffect(() => {
-  //   // keeps track of goals completed and total goals
-  //   updateGoalCount(),
-  //   [goalItems]
-  // })
+  useEffect(() => {
+    // keeps track of goals completed and total goals
+    updateGoalCount(),
+    [goalItems]
+  })
 
   const addGoal = (values) => {
     const goal = {
@@ -42,20 +42,17 @@ const MainPage = () => {
   }
 
   // increments the progress of goal at given index
-  const incrementCompleted = (index, completed=-1, loop=true) => {
+  const incrementCompleted = (index, completed=-1) => {
     const item = goalItems[index]
     console.log(completed)
 
     let newItem = item
-    completed >= 0 ?  newItem = {...item, completed: item.completed + 1} : {...item, completed: completed + 1}
+    newItem = {...item, completed: item.completed + 1}
     let newItems = [...goalItems]
     newItems.splice(index, 1, newItem)
     setGoalItems(newItems)
-    timer.current = setTimeout(() => incrementCompleted(index, completed + 1, false), 200)
-    
     
     console.log(item)
-    // timer.current = setTimeout(() => incrementCompleted(index, false), 200)
     
     
   }
@@ -92,14 +89,24 @@ const MainPage = () => {
 
     setGoalItems(tempItems)
   }
+
+  const getColor = () => {
+    return (finishedGoals >= goalItems.length ? 
+                styles.green :
+                (finishedGoals >= goalItems.length / 2 ?
+                    styles.yellow : 
+                    styles.pink
+                )
+    )
+}
   return (
     <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.completedGoalCount}>{finishedGoals}/{totalGoals}</Text>
-          <Text style={styles.titleText}>GOALS COMPLETED TODAY</Text>
+          <Text style={[styles.completedGoalCount, getColor()]}>{finishedGoals}/{totalGoals}</Text>
+          <Text style={[styles.titleText, getColor()]}>GOALS COMPLETED TODAY</Text>
         </View>
 
-      <View style={styles.goalsWrapper}>
+      <ScrollView style={styles.goalsWrapper}>
         {goalItems.map((item, index) => {
           return (
             <Goal 
@@ -115,7 +122,7 @@ const MainPage = () => {
               />
           )
         })}
-      </View>
+      </ScrollView>
       
       <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <NewGoalForm handleAddGoal={(values) => addGoal(values)}/>
@@ -135,18 +142,20 @@ const MainPage = () => {
         
       </View>
     </View>
-    
-    
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+    // backgroundColor:  colors.darkMode.primary,
+  },
   dayContainer: {
-    width: '90%',
+    width: '95%',
     flexDirection: 'row',
     position: 'absolute',
     alignItems: 'center',
-    // alignContent: 'center'
     justifyContent: 'space-between',
     bottom: 20,
     marginHorizontal: '5%'    
@@ -161,28 +170,25 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   endDay: {
-    backgroundColor: colors.pink,
+    backgroundColor: colors.pink.primary,
   },
   startDay: {
-    backgroundColor: colors.green,  
+    backgroundColor: colors.green.primary,  
   },
   dayText: {
     fontSize: 24,
     fontWeight: 'bold'
   },  
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
+
   goalsWrapper: {
     marginTop: 20,
     marginHorizontal: '5%',
-    width: '90%'
+    width: '90%',
+    // height: 20
   },
   header: {
     padding: 20,
     paddingBottom: 10,
-    backgroundColor: 'white'
   },
   completedGoalCount: {
     fontSize: 72,
@@ -204,6 +210,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // marginHorizontal: '5%'
   },
+  green: {
+    color: colors.green.primary
+  },
+  pink: {
+    color: colors.pink.primary
+  },
+  yellow: {
+    color: colors.yellow.primary
+  }
 
 
 });

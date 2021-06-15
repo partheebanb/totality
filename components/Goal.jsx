@@ -33,7 +33,7 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
             onLongPress={() => onRemove(index)}
             delayLongPress={1600}
         >
-            <Text style={styles.goalText}>{text}</Text>
+            <Text style={[completed >= target ? styles.greenSecondary : (completed >= target/2 ? styles.yellowSecondary : styles.pinkSecondary), styles.goalText]}>{text}</Text>
             <View style={styles.itemProgress}>
                 <Text style={styles.itemProgressText}>{completed}</Text>
                 <Text style={styles.itemProgressText}> / </Text>
@@ -41,17 +41,17 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
             </View>
 
             <View style={styles.buttonContainer}>
-                <Pressable 
+                <TouchableOpacity 
                     style={[styles.button]} 
-                    onPressIn={() => onIncrement(index, completed)} 
-                    onPressOut={onPressOut}
+                    onPress={() => onIncrement(index, completed)} 
+                    // onPressOut={onPressOut}
                 >
                     <Image 
                         style={styles.buttonImage}
                         source={require('../assets/greenPlus.png')}
                     />
-                </Pressable>
-                <Pressable 
+                </TouchableOpacity>
+                <TouchableOpacity 
                     style={[styles.button]} 
                     onPress={() => onDecrement(index)}
                     // onPressOut={onPressOut}
@@ -60,7 +60,7 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
                         style={styles.buttonImage}
                         source={require('../assets/pinkMinus.png')}
                     />
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </TouchableOpacity >
     )
@@ -68,22 +68,22 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
 
 const styles = StyleSheet.create({
     greenBackground: {
-        backgroundColor: colors.green
+        backgroundColor: colors.green.primary
     }, 
     pinkBackground: {
-        backgroundColor: colors.pink
+        backgroundColor: colors.pink.primary
     }, 
     yellowBackground: {
-        backgroundColor: colors.yellow
+        backgroundColor: colors.yellow.primary
     },
-    green: {
-        color: colors.green
+    greenSecondary: {
+        color: colors.green.secondary
     }, 
-    pink: {
-        color: colors.pink
+    pinkSecondary: {
+        color: colors.pink.secondary
     }, 
-    yellow: {
-        color: colors.yellow
+    yellowSecondary: {
+        color: colors.yellow.secondary
     },
 
     item: {
@@ -93,13 +93,13 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 15,
         marginVertical: 7,
-        height: 60
+        height: 60,
+        width: '98%'
     },
     goalText: {
         fontSize: 24,
         fontWeight: '300',
-        width: '60%'
-
+        width: '60%',
     },
     itemProgress: {
         flexDirection: 'row',
@@ -117,12 +117,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',       
-        // marginHorizontal: 7,
-        backgroundColor: 'white',
         fontSize: 32,
-        // textAlignVertical: 'center',
         textAlign: 'center',
-        // alignContent: 'center'
         
     },
     buttonImage: {

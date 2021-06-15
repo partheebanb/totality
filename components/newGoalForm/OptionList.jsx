@@ -7,15 +7,14 @@ const OptionList = ({options}) => {
     const [ selected, setSelected ] = useState(options[0])
     // const [ options, setOptions ] = useState(names)
     console.log(selected);
-    const switchSelected = (option) => {
-        setSelected(option)
-        console.log(option)
+    const switchSelected = (index) => {
+        setSelected(options[index])
     }
 
     return (
         options.map((option, index) => {
             return (
-                <Option text={option} key={option} selected={option === selected} onSelect={(key) => switchSelected(key)}/>
+                <Option text={option} index={index} key={index} selected={option === selected} onSelect={(index) => switchSelected(index)}/>
             )
         })
     )
