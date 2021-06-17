@@ -1,17 +1,25 @@
 import React, {useState, useEffect, useRef } from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Image, TouchableOpacity, View, ScrollView, Modal } from 'react-native';
 
 import Goal from '../components/Goal'
-import NewGoalForm from '../components/NewGoalForm'
+import NewGoalFormik from '../components/NewGoalForm'
+import FrequencyBar from '../components/FrequencyBar';
 
 import colors from '../assets/colors'
+import NewGoalForm from './NewGoalForm';
 
 const MainPage = () => {
 
-  const [goalItems, setGoalItems] = useState([])
-  const [finishedGoals, setFinishedGoals] = useState(0)
-  const [totalGoals, setTotalGoals] = useState(goalItems.length)
-  const timer = useRef(null)
+  const [ goalItems, setGoalItems ] = useState([])
+  const [ finishedGoals, setFinishedGoals ] = useState(0)
+  const [ showNewGoalForm, setShowNewGoalForm ] = useState(false)
+  const [ currentFrequency, setCurrentFrequency ] = useState('Daily')
+
+  const switchShowNewGoalForm = () => {
+    setShowNewGoalForm(!showNewGoalForm)
+  }
+
+  
 
   useEffect(() => {
     // keeps track of goals completed and total goals
@@ -19,13 +27,14 @@ const MainPage = () => {
     [goalItems]
   })
 
-  const addGoal = (values) => {
+  const addGoal = (newGoal) => {
     const goal = {
-      text: values.text,
-      target: values.target,
+      text: newGoal.text,
+      target: newGoal.target,
       completed: 0
     }
     setGoalItems([...goalItems, goal])
+    switchShowNewGoalForm()
   }
 
   const updateGoalCount = () => {
@@ -37,7 +46,7 @@ const MainPage = () => {
       }
     })
     setFinishedGoals(finished)
-    setTotalGoals(goalItems.length)
+    // setTotalGoals(goalItems.length)
 
   }
 
@@ -102,44 +111,59 @@ const MainPage = () => {
   return (
     <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={[styles.completedGoalCount, getColor()]}>{finishedGoals}/{totalGoals}</Text>
-          <Text style={[styles.titleText, getColor()]}>GOALS COMPLETED TODAY</Text>
+          <Text style={[styles.completedGoalCount, getColor()]}>{finishedGoals}/{goalItems.length}</Text>
+          {/* <Text style={[styles.titleText, getColor()]}>GOALS COMPLETED TODAY</Text> */}
         </View>
 
-      <ScrollView style={styles.goalsWrapper}>
-        {goalItems.map((item, index) => {
-          return (
-            <Goal 
-              text={item.text} 
-              completed={item.completed} 
-              target={item.target} 
-              onIncrement={(key) => incrementCompleted(key)} 
-              onDecrement={(key) => decrementCompleted(key)} 
-              onPressOut={stopTimer}
-              index={index}
-              onRemove={removeGoal}
-              key={index} 
-              />
-          )
-        })}
-      </ScrollView>
-      
-      <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <NewGoalForm handleAddGoal={(values) => addGoal(values)}/>
-      </KeyboardAvoidingView>
 
-      <View style={styles.dayContainer}>
-        <TouchableOpacity style={[styles.startDay, styles.day]} onTouchStart={resetGoals}>
-          <Text style={styles.dayText}>
-            START DAY
-          </Text>
+      <FrequencyBar />
+      <View style={styles.goalsContainer}>
+        <ScrollView style={styles.goals}>
+            {goalItems.map((item, index) => {
+              return (
+                <Goal 
+                  text={item.text} 
+                  completed={item.completed} 
+                  target={item.target} 
+                  onIncrement={(key) => incrementCompleted(key)} 
+                  onDecrement={(key) => decrementCompleted(key)} 
+                  onPressOut={stopTimer}
+                  index={index}
+                  onRemove={removeGoal}
+                  key={index} 
+                  />
+              )
+            })}
+        </ScrollView>
+      </View>
+      
+      {/* <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <NewGoalFormik handleAddGoal={(values) => addGoal(values)}/>
+      </KeyboardAvoidingView> */}
+{/* 
+      // <View style={styles.dayContainer}>
+      //   <TouchableOpacity style={[styles.startDay, styles.day]} onTouchStart={resetGoals}>
+      //     <Text style={styles.dayText}>
+      //       START DAY
+      //     </Text>
+      //   </TouchableOpacity>
+      //   <TouchableOpacity style={[styles.endDay, styles.day]} onPress={resetGoals}>
+      //     <Text style={styles.dayText}>
+      //       END DAY
+      //     </Text>
+      //   </TouchableOpacity> */} 
+      
+      {/* </View> */}
+
+
+      <Modal animationType="slide" transparent={false} visible={showNewGoalForm}>
+        <NewGoalForm onCancel={switchShowNewGoalForm} onSubmit={(newGoal) => addGoal(newGoal)}/>
+      </Modal>
+      
+      <View style={styles.newGoalContainer}>
+        <TouchableOpacity style={styles.newGoal} onPress={switchShowNewGoalForm} >
+          <Image style={styles.newGoalImage} source={require('../assets/greenPlus.png')}/>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.endDay, styles.day]} onPress={resetGoals}>
-          <Text style={styles.dayText}>
-            END DAY
-          </Text>
-        </TouchableOpacity>
-        
       </View>
     </View>
   )
@@ -151,40 +175,57 @@ const styles = StyleSheet.create({
     width: '100%',
     // backgroundColor:  colors.darkMode.primary,
   },
-  dayContainer: {
-    width: '95%',
-    flexDirection: 'row',
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    bottom: 20,
-    marginHorizontal: '5%'    
-  },
-  day: {
-    width: '47.5%',
-    height: 40,
-    // position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    // marginHorizontal: '30%',
-    borderRadius: 10
-  },
-  endDay: {
-    backgroundColor: colors.pink.primary,
-  },
-  startDay: {
-    backgroundColor: colors.green.primary,  
-  },
-  dayText: {
-    fontSize: 24,
-    fontWeight: 'bold'
-  },  
+  // dayContainer: {
+  //   width: '95%',
+  //   flexDirection: 'row',
+  //   position: 'absolute',
+  //   alignItems: 'center',
+  //   justifyContent: 'space-between',
+  //   bottom: 10,
+  //   marginHorizontal: '5%',
+  //   backgroundColor: 'white',
+  //   height: 60   
+  // },
+  // day: {
+  //   width: '47.5%',
+  //   height: 40,
+  //   // position: 'absolute',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   // marginHorizontal: '30%',
+  //   borderRadius: 10
+  // },
+  // endDay: {
+  //   backgroundColor: colors.pink.primary,
+  // },
+  // startDay: {
+  //   backgroundColor: colors.green.primary,  
+  // },
+  // dayText: {
+  //   fontSize: 24,
+  //   fontWeight: 'bold'
+  // },  
 
-  goalsWrapper: {
-    marginTop: 20,
+  frequency: {
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    width: '92%',
+    paddingLeft: '5%'
+    // alignContent: 'center'
+  },
+  frequencyText: {
+    color: colors.grey
+  },  
+  goals: {
+    marginTop: 10,
     marginHorizontal: '5%',
     width: '90%',
-    // height: 20
+    // height: '20%'
+  },
+  goalsContainer : {
+    height: '72%',
+    paddingBottom: 20
   },
   header: {
     padding: 20,
@@ -199,7 +240,8 @@ const styles = StyleSheet.create({
     fontWeight: '400'
   },
   items: {
-    marginTop: 30
+    marginTop: 30,
+    // height: '60%'
   },
   form: {
     position: 'absolute',
@@ -208,7 +250,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
+    paddingVertical: 10
     // marginHorizontal: '5%'
+  },
+  newGoal: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: colors.green.primary,
+    alignItems: 'center',
+    justifyContent: 'space-evenly'
+
+  },
+  newGoalContainer: {
+    // height: 60,
+    flexDirection: 'row',
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    bottom: 15
+  },
+  newGoalImage: {
+    height: 30,
+    width: 30
+    // color: colors.green.primary,
+    // marginBottom: 40
   },
   green: {
     color: colors.green.primary

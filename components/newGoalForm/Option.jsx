@@ -14,12 +14,12 @@ const Option = ({text, selected, onSelect, index}) => {
             // borderWidth: 0.3,
             borderRadius: 10,
             borderColor: colors.grey,
-            backgroundColor: selected ? colors.green.primary : colors.darkMode.primary,
+            backgroundColor: selected ? colors.green.primary : 'white',
             alignItems: 'center',
             justifyContent: 'center'
         },
         text: {
-            color: selected ? colors.green.secondary : colors.darkMode.secondary
+            color: selected ? colors.green.secondary : colors.grey
         }
     })
     return (

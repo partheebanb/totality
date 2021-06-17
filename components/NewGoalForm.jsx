@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 import CircleButton from './CircleButton'
 // import ''
 
-const NewGoalForm = ({handleAddGoal}) => {
+const NewGoalFormik = ({handleAddGoal}) => {
     return (
         <View>
             <Formik
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         width: '80%',
         borderColor: '#c0c0c0',
         borderWidth: 1,
-        borderRadius: 10,        
+        borderRadius: 20,        
         flexDirection: 'row'
     },  
     textInput: {
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
     }
 
 })
-export default NewGoalForm
+export default NewGoalFormik

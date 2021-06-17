@@ -5,24 +5,6 @@ import colors from '../assets/colors'
 
 const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, index, onRemove}) => {
 
-    // let timer = null
-
-    // const incPress = () => {
-    //     timer = setTimeout(() => onIncrement(index), 150)
-    //     // onIncrement(index)
-
-    // }
-
-    // const decPress = () => {
-    //     timer = setTimeout(() => onDecrement(index), 150)
-    //     // onDecrement(index)
-    // }
-
-    // const stopPress = () => {
-    //     clearTimeout(timer)
-    // }
-
-
 
     return (
         <TouchableOpacity 
@@ -36,6 +18,7 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
             <Text style={[completed >= target ? styles.greenSecondary : (completed >= target/2 ? styles.yellowSecondary : styles.pinkSecondary), styles.goalText]}>{text}</Text>
             <View style={styles.itemProgress}>
                 <Text style={styles.itemProgressText}>{completed}</Text>
+                {/* <TextInput placeholder={completed}/> */}
                 <Text style={styles.itemProgressText}> / </Text>
                 <Text style={styles.itemProgressText}>{target}</Text>
             </View>
@@ -93,7 +76,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 15,
         marginVertical: 7,
-        height: 60,
+        height: 50,
         width: '98%'
     },
     goalText: {

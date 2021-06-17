@@ -1,6 +1,7 @@
 export default colors = {
     green: {
         primary: '#41FFBA',
+        // primary: '#1FC7D4',
         secondary: '#09BE7D'
     },
     pink: {
@@ -8,7 +9,7 @@ export default colors = {
         secondary: '#D83434'
     },
     yellow: {
-        primary: '#FFD700',
+        primary: '#fff700',
         secondary: '#AA9700'
     },
     grey: '#c4c4c4',
