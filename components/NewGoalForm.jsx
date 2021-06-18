@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Button, TextInput, View, Keyboard, TouchableOpacity, Text} from 'react-native'
 import { Formik } from 'formik'
 
-import CircleButton from './CircleButton'
+import CircleButton from './CircleButton.jsx'
 // import ''
 
 const NewGoalFormik = ({handleAddGoal}) => {

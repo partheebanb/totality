@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FlatList, View, } from 'react-native'
 
-import Option from './Option'
+import Option from './Option.jsx'
 
 const OptionList = ({options}) => {
     const [ selected, setSelected ] = useState(options[0])

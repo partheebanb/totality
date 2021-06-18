@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 
-import colors from '../../assets/colors'
+import colors from '../../assets/colors.js'
 
 const Option = ({text, selected, onSelect, index}) => {
 

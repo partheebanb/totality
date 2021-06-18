@@ -1,12 +1,12 @@
-import React, {useState, useEffect, useRef } from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, Image, TouchableOpacity, View, ScrollView, Modal } from 'react-native';
+import React, {useState, useEffect } from 'react';
+import { StyleSheet, Text, Image, TouchableOpacity, View, ScrollView, Modal } from 'react-native';
 
-import Goal from '../components/Goal'
-import NewGoalFormik from '../components/NewGoalForm'
-import FrequencyBar from '../components/FrequencyBar';
+import Goal from '../components/Goal.jsx'
+import NewGoalFormik from '../components/NewGoalForm.jsx'
+import FrequencyBar from '../components/FrequencyBar.jsx';
 
-import colors from '../assets/colors'
-import NewGoalForm from './NewGoalForm';
+import colors from '../assets/colors.js'
+import NewGoalForm from './NewGoalForm.jsx';
 
 const MainPage = () => {
 
@@ -18,8 +18,6 @@ const MainPage = () => {
   const switchShowNewGoalForm = () => {
     setShowNewGoalForm(!showNewGoalForm)
   }
-
-  
 
   useEffect(() => {
     // keeps track of goals completed and total goals
@@ -46,7 +44,6 @@ const MainPage = () => {
       }
     })
     setFinishedGoals(finished)
-    // setTotalGoals(goalItems.length)
 
   }
 
@@ -60,9 +57,6 @@ const MainPage = () => {
     let newItems = [...goalItems]
     newItems.splice(index, 1, newItem)
     setGoalItems(newItems)
-    
-    console.log(item)
-    
     
   }
 
@@ -100,21 +94,22 @@ const MainPage = () => {
   }
 
   const getColor = () => {
-    return (finishedGoals >= goalItems.length ? 
-                styles.green :
-                (finishedGoals >= goalItems.length / 2 ?
-                    styles.yellow : 
-                    styles.pink
-                )
+    return (
+      finishedGoals >= goalItems.length ? 
+          styles.green :
+          (finishedGoals >= goalItems.length / 2 ?
+              styles.yellow : 
+              styles.pink
+          )
     )
-}
+  }
+
   return (
     <View style={styles.container}>
         <View style={styles.header}>
           <Text style={[styles.completedGoalCount, getColor()]}>{finishedGoals}/{goalItems.length}</Text>
           {/* <Text style={[styles.titleText, getColor()]}>GOALS COMPLETED TODAY</Text> */}
         </View>
-
 
       <FrequencyBar />
       <View style={styles.goalsContainer}>
@@ -136,7 +131,17 @@ const MainPage = () => {
             })}
         </ScrollView>
       </View>
+    
+      <Modal animationType="slide" transparent={false} visible={showNewGoalForm}>
+        <NewGoalForm onCancel={switchShowNewGoalForm} onSubmit={(newGoal) => addGoal(newGoal)}/>
+      </Modal>
       
+      <View style={styles.newGoalContainer}>
+        <TouchableOpacity style={styles.newGoal} onPress={switchShowNewGoalForm} >
+          <Image style={styles.newGoalImage} source={require('../assets/greenPlus.png')}/>
+        </TouchableOpacity>
+      </View>
+
       {/* <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <NewGoalFormik handleAddGoal={(values) => addGoal(values)}/>
       </KeyboardAvoidingView> */}
@@ -154,17 +159,6 @@ const MainPage = () => {
       //   </TouchableOpacity> */} 
       
       {/* </View> */}
-
-
-      <Modal animationType="slide" transparent={false} visible={showNewGoalForm}>
-        <NewGoalForm onCancel={switchShowNewGoalForm} onSubmit={(newGoal) => addGoal(newGoal)}/>
-      </Modal>
-      
-      <View style={styles.newGoalContainer}>
-        <TouchableOpacity style={styles.newGoal} onPress={switchShowNewGoalForm} >
-          <Image style={styles.newGoalImage} source={require('../assets/greenPlus.png')}/>
-        </TouchableOpacity>
-      </View>
     </View>
   )
 }
@@ -265,13 +259,12 @@ const styles = StyleSheet.create({
 
   },
   newGoalContainer: {
-    // height: 60,
     flexDirection: 'row',
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    bottom: 15
+    bottom: 20
   },
   newGoalImage: {
     height: 30,
@@ -288,9 +281,6 @@ const styles = StyleSheet.create({
   yellow: {
     color: colors.yellow.primary
   }
-
-
 });
-
 
 export default MainPage

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { View, Text, StyleSheet, Pressable, TouchableOpacity, TextInput, Image } from 'react-native'
 
-import colors from '../assets/colors'
+import colors from '../assets/colors.js'
 
 const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, index, onRemove}) => {
 
@@ -17,10 +17,15 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
         >
             <Text style={[completed >= target ? styles.greenSecondary : (completed >= target/2 ? styles.yellowSecondary : styles.pinkSecondary), styles.goalText]}>{text}</Text>
             <View style={styles.itemProgress}>
-                <Text style={styles.itemProgressText}>{completed}</Text>
-                {/* <TextInput placeholder={completed}/> */}
-                <Text style={styles.itemProgressText}> / </Text>
-                <Text style={styles.itemProgressText}>{target}</Text>
+                <View style={styles.itemProgressTextWrapper}>
+                    <Text style={styles.itemProgressText}>{completed}</Text>
+                </View>
+                <View style={styles.itemProgressTextWrapper}>
+                    <Text style={styles.itemProgressText}> / </Text>
+                </View>
+                <View style={styles.itemProgressTextWrapper}>
+                    <Text style={styles.itemProgressText}>{target}</Text>
+                </View>
             </View>
 
             <View style={styles.buttonContainer}>
@@ -77,16 +82,21 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginVertical: 7,
         height: 50,
-        width: '98%'
+        width: '100%'
     },
     goalText: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: '300',
-        width: '60%',
+        width: '50%',
     },
     itemProgress: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: 60,
+        marginRight: 10
+    },
+    itemProgressTextWrapper: {
+        width: '33%'
     },
     buttonContainer: {
         width: 85,
@@ -95,9 +105,9 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     button: {
-        height: 30,
-        width: 30,
-        borderRadius: 15,
+        height: 28,
+        width: 28,
+        borderRadius: 14,
         justifyContent: 'center',
         alignItems: 'center',       
         fontSize: 32,
@@ -105,8 +115,8 @@ const styles = StyleSheet.create({
         
     },
     buttonImage: {
-        height: 30,
-        width: 30
+        height: 28,
+        width: 28
     }
 })
 

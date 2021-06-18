@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Button, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Modal } from 'react-native'
 
 import formik from 'formik'
-import colors from '../assets/colors'
+import colors from '../assets/colors.js'
 
-import Option from '../components/newGoalForm/Option'
-import OptionList from '../components/newGoalForm/OptionList'
-import SelectDays from '../components/newGoalForm/SelectDays'
+import Option from '../components/newGoalForm/Option.jsx'
+import OptionList from '../components/newGoalForm/OptionList.jsx'
+import SelectDays from '../components/newGoalForm/SelectDays.jsx'
 
 const NewGoalForm = ({onCancel, onSubmit}) => {
 
@@ -92,7 +92,6 @@ styles = StyleSheet.create({
     container: {
         padding: 25,
         // backgroundColor: colors.darkMode.primary,
-        // borderWidth
     },
     cancelOrAddContainer: {
         flexDirection: 'row',

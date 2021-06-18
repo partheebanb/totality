@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-import Option from './Option'
+import Option from './Option.jsx'
 
 const SelectDays = ({ selectedDays, setSelectedDays }) => {
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
