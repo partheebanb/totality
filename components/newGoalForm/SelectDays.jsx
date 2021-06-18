@@ -34,7 +34,6 @@ const SelectDays = ({ selectedDays, setSelectedDays }) => {
 const styles = StyleSheet.create({
     container: {
         marginTop: 10,
-
     },
     daysContainer: {
         width: '100%',

@@ -1,12 +1,10 @@
 import React from 'react';
 
-import MainPage from './screens/MainPage'
-import NewGoalForm from './screens/NewGoalForm'
+import MainPage from './screens/MainPage.jsx'
 
 const App = () => {
 
   return (
-    // <NewGoalForm />
     <MainPage />
   )
 }

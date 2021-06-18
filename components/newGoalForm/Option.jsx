@@ -22,6 +22,7 @@ const Option = ({text, selected, onSelect, index}) => {
             color: selected ? colors.green.secondary : colors.grey
         }
     })
+    
     return (
             <TouchableOpacity style={styles.option} onPress={() => onSelect(index)}>
                 <Text style={styles.text}>
