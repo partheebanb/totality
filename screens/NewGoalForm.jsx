@@ -16,7 +16,9 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
 
     const [ goal, setGoal ] = useState({
         text: '',
-        target: 0
+        target: 0,
+        // frequency: 'Daily',
+        // timeOfDay: 'All-day'
     })
 
     const setName = (text) => {
@@ -37,7 +39,7 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
 
     return (
 
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.formContainer}>
 
             <View style={styles.cancelOrAddContainer}>
                 <TouchableOpacity onPress={onCancel}>
@@ -55,14 +57,14 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
 
             <View style={styles.optionsContainer}>
                 <Text style={styles.text}>How often?</Text>
-                <View style={styles.optionsButtonContainer}>
+                <View style={styles.optionListContainer}>
                     <OptionList options={['Daily', 'Weekly', 'Monthly', 'Yearly']}/>
                 </View>
             </View>
 
             <View style={styles.optionsContainer}>
                 <Text style={styles.text}>At what time of day?</Text>
-                <View style={styles.optionsButtonContainer}>
+                <View style={styles.optionListContainer}>
                     <OptionList options={['All-day', 'Morning', 'Afternoon', 'Evening']}/>
                 </View>
             </View>
@@ -74,7 +76,7 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
 
             <View style={styles.optionsContainer}>
                 <Text style={styles.text}>Set an end date?</Text>
-                <View style={styles.optionsButtonContainer}>
+                <View style={styles.optionListContainer}>
                     <OptionList options={['Yes', 'No']}/>
                 </View>
 
@@ -89,7 +91,7 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
 }
 
 styles = StyleSheet.create({
-    container: {
+    formContainer: {
         padding: 25,
         // backgroundColor: colors.darkMode.primary,
     },
@@ -137,7 +139,7 @@ styles = StyleSheet.create({
         marginTop: 30,
         alignItems: 'center'
     },
-    optionsButtonContainer: {
+    optionListContainer: {
         marginTop: 10,
         width: '100%',
         flexDirection: 'row',

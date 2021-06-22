@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import { View, Text, StyleSheet, Pressable, TouchableOpacity, TextInput, Image } from 'react-native'
 
-import colors from '../assets/colors.js'
+import colors from '../../assets/colors.js'
 
 const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, index, onRemove}) => {
 
-
+    const textStyles= completed >= target ? styles.greenSecondary : (completed >= target/2 ? styles.yellowSecondary : styles.pinkSecondary)
+        
     return (
         <TouchableOpacity 
             // if completed >= goal : green
@@ -15,16 +16,16 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
             onLongPress={() => onRemove(index)}
             delayLongPress={1600}
         >
-            <Text style={[completed >= target ? styles.greenSecondary : (completed >= target/2 ? styles.yellowSecondary : styles.pinkSecondary), styles.goalText]}>{text}</Text>
+            <Text style={[textStyles, styles.goalText]}>{text}</Text>
             <View style={styles.itemProgress}>
                 <View style={styles.itemProgressTextWrapper}>
-                    <Text style={styles.itemProgressText}>{completed}</Text>
+                    <Text style={[textStyles, styles.itemProgressText, ]}>{completed}</Text>
                 </View>
                 <View style={styles.itemProgressTextWrapper}>
-                    <Text style={styles.itemProgressText}> / </Text>
+                    <Text style={[styles.itemProgressText, textStyles]}> / </Text>
                 </View>
                 <View style={styles.itemProgressTextWrapper}>
-                    <Text style={styles.itemProgressText}>{target}</Text>
+                    <Text style={[styles.itemProgressText, textStyles]}>{target}</Text>
                 </View>
             </View>
 
@@ -36,7 +37,7 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
                 >
                     <Image 
                         style={styles.buttonImage}
-                        source={require('../assets/greenPlus.png')}
+                        source={require('../../assets/greenPlus.png')}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity 
@@ -46,7 +47,7 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
                 >
                     <Image 
                         style={styles.buttonImage}
-                        source={require('../assets/pinkMinus.png')}
+                        source={require('../../assets/pinkMinus.png')}
                     />
                 </TouchableOpacity>
             </View>
@@ -97,6 +98,9 @@ const styles = StyleSheet.create({
     },
     itemProgressTextWrapper: {
         width: '33%'
+    },
+    itemProgressText: {
+        fontSize: 14
     },
     buttonContainer: {
         width: 85,

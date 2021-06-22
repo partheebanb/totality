@@ -1,12 +1,14 @@
 import React, {useState, useEffect } from 'react';
 import { StyleSheet, Text, Image, TouchableOpacity, View, ScrollView, Modal } from 'react-native';
 
-import Goal from '../components/Goal.jsx'
-import NewGoalFormik from '../components/NewGoalForm.jsx'
-import FrequencyBar from '../components/FrequencyBar.jsx';
+// import NewGoalFormik from '../components/legacy/NewGoalForm.jsx'
+import Header from '../components/mainPage/Header.jsx';
+import FrequencyBar from '../components/mainPage/FrequencyBar.jsx';
+import Goal from '../components/mainPage/Goal.jsx'
+import NewGoalForm from './NewGoalForm.jsx';
+
 
 import colors from '../assets/colors.js'
-import NewGoalForm from './NewGoalForm.jsx';
 
 const MainPage = () => {
 
@@ -93,25 +95,23 @@ const MainPage = () => {
     setGoalItems(tempItems)
   }
 
-  const getColor = () => {
-    return (
-      finishedGoals >= goalItems.length ? 
-          styles.green :
-          (finishedGoals >= goalItems.length / 2 ?
-              styles.yellow : 
-              styles.pink
-          )
-    )
-  }
+  // const getColor = () => {
+  //   return (
+  //     finishedGoals >= goalItems.length ? 
+  //         styles.green :
+  //         (finishedGoals >= goalItems.length / 2 ?
+  //             styles.yellow : 
+  //             styles.pink
+  //         )
+  //   )
+  // }
 
   return (
     <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={[styles.completedGoalCount, getColor()]}>{finishedGoals}/{goalItems.length}</Text>
-          {/* <Text style={[styles.titleText, getColor()]}>GOALS COMPLETED TODAY</Text> */}
-        </View>
 
-      <FrequencyBar />
+      <Header finishedGoals={finishedGoals} totalGoals={goalItems.length} />
+      <FrequencyBar currentFrequency={currentFrequency} setCurrentFrequency={setCurrentFrequency}/>
+
       <View style={styles.goalsContainer}>
         <ScrollView style={styles.goals}>
             {goalItems.map((item, index) => {
@@ -145,8 +145,8 @@ const MainPage = () => {
       {/* <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <NewGoalFormik handleAddGoal={(values) => addGoal(values)}/>
       </KeyboardAvoidingView> */}
-{/* 
-      // <View style={styles.dayContainer}>
+
+      {/* // <View style={styles.dayContainer}>
       //   <TouchableOpacity style={[styles.startDay, styles.day]} onTouchStart={resetGoals}>
       //     <Text style={styles.dayText}>
       //       START DAY
@@ -155,8 +155,8 @@ const MainPage = () => {
       //   <TouchableOpacity style={[styles.endDay, styles.day]} onPress={resetGoals}>
       //     <Text style={styles.dayText}>
       //       END DAY
-      //     </Text>
-      //   </TouchableOpacity> */} 
+      //     </Text> */}
+      {/* //   </TouchableOpacity>  */}
       
       {/* </View> */}
     </View>
@@ -200,17 +200,6 @@ const styles = StyleSheet.create({
   //   fontWeight: 'bold'
   // },  
 
-  frequency: {
-    alignItems: 'stretch',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    width: '92%',
-    paddingLeft: '5%'
-    // alignContent: 'center'
-  },
-  frequencyText: {
-    color: colors.grey
-  },  
   goals: {
     marginTop: 10,
     marginHorizontal: '5%',
@@ -221,18 +210,18 @@ const styles = StyleSheet.create({
     height: '72%',
     paddingBottom: 20
   },
-  header: {
-    padding: 20,
-    paddingBottom: 10,
-  },
-  completedGoalCount: {
-    fontSize: 72,
-    fontWeight: '900'
-  },
-  titleText: {
-    fontSize: 24,
-    fontWeight: '400'
-  },
+  // header: {
+  //   padding: 20,
+  //   paddingBottom: 10,
+  // },
+  // completedGoalCount: {
+  //   fontSize: 72,
+  //   fontWeight: '900'
+  // },
+  // titleText: {
+  //   fontSize: 24,
+  //   fontWeight: '400'
+  // },
   items: {
     marginTop: 30,
     // height: '60%'

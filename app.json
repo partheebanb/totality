@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "totality",
+    "name": "Totality",
     "slug": "totality",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "An easy-to-use goal/habit tracker with history and support for breaking down large goals into smaller, easily achievable chunks.",
+    "githubUrl": "https://github.com/partheebanb/totality"
   }
 }

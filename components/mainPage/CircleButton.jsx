@@ -5,8 +5,7 @@ const CircleButton = (props) => {
     return (
         <TouchableOpacity style={styles.circleButton} onPress={props.onPress}>
         </TouchableOpacity>
-    )
-    
+    )  
 }
 
 const styles = StyleSheet.create({

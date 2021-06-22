@@ -1,8 +1,10 @@
+// legacy code
+
 import React from 'react'
 import { StyleSheet, Button, TextInput, View, Keyboard, TouchableOpacity, Text} from 'react-native'
 import { Formik } from 'formik'
 
-import CircleButton from './CircleButton.jsx'
+import CircleButton from '../mainPage/CircleButton.jsx'
 // import ''
 
 const NewGoalFormik = ({handleAddGoal}) => {
