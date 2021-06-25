@@ -28,11 +28,7 @@ const MainPage = () => {
   })
 
   const addGoal = (newGoal) => {
-    const goal = {
-      text: newGoal.text,
-      target: newGoal.target,
-      completed: 0
-    }
+    const goal = {...newGoal, completed: 0}
     setGoalItems([...goalItems, goal])
     switchShowNewGoalForm()
   }
@@ -87,47 +83,39 @@ const MainPage = () => {
 
   // reset the progress on
   const resetGoals = () => {
-    // let tempItems = [...goalItems]
-    const tempItems = goalItems.map((item) => (
+    const tempItems = goalItems.map(item => (
       {...item, completed: 0}
     ))
-
     setGoalItems(tempItems)
   }
-
-  // const getColor = () => {
-  //   return (
-  //     finishedGoals >= goalItems.length ? 
-  //         styles.green :
-  //         (finishedGoals >= goalItems.length / 2 ?
-  //             styles.yellow : 
-  //             styles.pink
-  //         )
-  //   )
-  // }
 
   return (
     <View style={styles.container}>
 
-      <Header finishedGoals={finishedGoals} totalGoals={goalItems.length} />
+      <Header finishedGoals={finishedGoals} totalGoals={goalItems.length} goals={goalItems} frequency={currentFrequency}/>
       <FrequencyBar currentFrequency={currentFrequency} setCurrentFrequency={setCurrentFrequency}/>
 
       <View style={styles.goalsContainer}>
         <ScrollView style={styles.goals}>
             {goalItems.map((item, index) => {
-              return (
-                <Goal 
-                  text={item.text} 
-                  completed={item.completed} 
-                  target={item.target} 
-                  onIncrement={(key) => incrementCompleted(key)} 
-                  onDecrement={(key) => decrementCompleted(key)} 
-                  onPressOut={stopTimer}
-                  index={index}
-                  onRemove={removeGoal}
-                  key={index} 
-                  />
-              )
+              console.log(item.frequency, currentFrequency)
+
+              if (item.frequency === currentFrequency) {
+                return (
+                  <Goal 
+                    text={item.text} 
+                    completed={item.completed} 
+                    target={item.target} 
+                    onIncrement={(key) => incrementCompleted(key)} 
+                    onDecrement={(key) => decrementCompleted(key)} 
+                    onPressOut={stopTimer}
+                    index={index}
+                    onRemove={removeGoal}
+                    key={index} 
+                    />
+                )
+                // return <></>
+              }
             })}
         </ScrollView>
       </View>
@@ -210,21 +198,8 @@ const styles = StyleSheet.create({
     height: '72%',
     paddingBottom: 20
   },
-  // header: {
-  //   padding: 20,
-  //   paddingBottom: 10,
-  // },
-  // completedGoalCount: {
-  //   fontSize: 72,
-  //   fontWeight: '900'
-  // },
-  // titleText: {
-  //   fontSize: 24,
-  //   fontWeight: '400'
-  // },
   items: {
     marginTop: 30,
-    // height: '60%'
   },
   form: {
     position: 'absolute',
@@ -235,7 +210,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     paddingVertical: 10
-    // marginHorizontal: '5%'
   },
   newGoal: {
     height: 50,
@@ -258,8 +232,6 @@ const styles = StyleSheet.create({
   newGoalImage: {
     height: 30,
     width: 30
-    // color: colors.green.primary,
-    // marginBottom: 40
   },
   green: {
     color: colors.green.primary

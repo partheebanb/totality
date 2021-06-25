@@ -10,16 +10,19 @@ import SelectDays from '../components/newGoalForm/SelectDays.jsx'
 
 const NewGoalForm = ({onCancel, onSubmit}) => {
 
-    const [ frequency, setFrequency ] = useState(0) // daily
-    const [ timeOfDay, setTimeOfDay ] = useState(0) // all-day
-    const [ selectedDays, setSelectedDays ] = useState([0, 1, 2, 3, 4]) // weekdays
+    // const [ selectedDays, setSelectedDays ] = useState([0, 1, 2, 3, 4]) // weekdays
 
     const [ goal, setGoal ] = useState({
         text: '',
         target: 0,
-        // frequency: 'Daily',
-        // timeOfDay: 'All-day'
+        frequency: 'Daily',
+        timeOfDay: 'All-day',
+        selectedDays: [0, 1, 2, 3, 4]
     })
+
+    const setDate = (date) => {
+        
+    }
 
     const setName = (text) => {
         setGoal({...goal, text})
@@ -29,6 +32,18 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
     const setTarget = (target) => {
         setGoal({...goal, target: parseInt(target)})
         console.log(goal)
+    }
+
+    const setFrequency = (frequency) => {
+        setGoal({...goal, frequency})
+    }
+
+    const setTimeOfDay = (timeOfDay) => {
+        setGoal({...goal, timeOfDay})
+    }
+
+    const setSelectedDays = (selectedDays) => {
+        setGoal({...goal, selectedDays})
     }
 
     const submit = () => {
@@ -58,26 +73,26 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
             <View style={styles.optionsContainer}>
                 <Text style={styles.text}>How often?</Text>
                 <View style={styles.optionListContainer}>
-                    <OptionList options={['Daily', 'Weekly', 'Monthly', 'Yearly']}/>
+                    <OptionList options={['Daily', 'Weekly', 'Monthly', 'Yearly']} onChange={setFrequency}/>
                 </View>
             </View>
 
             <View style={styles.optionsContainer}>
                 <Text style={styles.text}>At what time of day?</Text>
                 <View style={styles.optionListContainer}>
-                    <OptionList options={['All-day', 'Morning', 'Afternoon', 'Evening']}/>
+                    <OptionList options={['All-day', 'Morning', 'Afternoon', 'Evening']} onChange={setTimeOfDay}/>
                 </View>
             </View>
 
             <View style={styles.optionsContainer}>
                 <Text style={styles.text}>On which days?</Text>
-                <SelectDays selectedDays={selectedDays} setSelectedDays={setSelectedDays}/>
+                <SelectDays selectedDays={goal.selectedDays} setSelectedDays={setSelectedDays}/>
             </View>
 
             <View style={styles.optionsContainer}>
                 <Text style={styles.text}>Set an end date?</Text>
                 <View style={styles.optionListContainer}>
-                    <OptionList options={['Yes', 'No']}/>
+                    <OptionList options={['Yes', 'No']} onChange={setDate}/>
                 </View>
 
                 {/* empty element at the bottom so every actual element is fully visible with scroll */}

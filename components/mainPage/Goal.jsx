@@ -55,6 +55,7 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
     )
 }
 
+
 const styles = StyleSheet.create({
     greenBackground: {
         backgroundColor: colors.green.primary
@@ -86,27 +87,27 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     goalText: {
-        fontSize: 20,
-        fontWeight: '300',
+        fontSize: 17,
+        fontWeight: '400',
         width: '50%',
     },
     itemProgress: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: 60,
+        width: 68,
         marginRight: 10
     },
     itemProgressTextWrapper: {
         width: '33%'
     },
     itemProgressText: {
-        fontSize: 14
+        fontSize: 12
     },
     buttonContainer: {
         width: 85,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginLeft: 10
+        marginLeft: 5
     },
     button: {
         height: 28,

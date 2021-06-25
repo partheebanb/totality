@@ -3,12 +3,13 @@ import { FlatList, View, } from 'react-native'
 
 import Option from './Option.jsx'
 
-const OptionList = ({options}) => {
+const OptionList = ({options, onChange}) => {
     const [ selected, setSelected ] = useState(options[0])
     // const [ options, setOptions ] = useState(names)
     console.log(selected);
     const switchSelected = (index) => {
         setSelected(options[index])
+        onChange(options[index])
     }
 
     return (

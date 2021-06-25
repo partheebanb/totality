@@ -15,13 +15,14 @@ const FrequencyBarItem = ({text, currentFrequency, setCurrentFrequency}) => {
 const styles = StyleSheet.create({
     currentText: {
         color: colors.green.primary,
-        fontWeight: '600',
-        fontSize: 14
+        fontWeight: '300',
+        fontSize: 16  
     },
     greyText: {
         color: colors.grey,
-        fontWeight: '600',
-        fontSize: 14
+        fontWeight: '300',
+        fontSize: 16
+    
     },  
 })
 
