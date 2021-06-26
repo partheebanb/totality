@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, Button, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Modal } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, Button, TouchableOpacity, StyleSheet, TextInput, ScrollView, Modal } from 'react-native'
 
-import formik from 'formik'
 import colors from '../assets/colors.js'
 
-import Option from '../components/newGoalForm/Option.jsx'
 import OptionList from '../components/newGoalForm/OptionList.jsx'
 import SelectDays from '../components/newGoalForm/SelectDays.jsx'
 
 const NewGoalForm = ({onCancel, onSubmit}) => {
-
-    // const [ selectedDays, setSelectedDays ] = useState([0, 1, 2, 3, 4]) // weekdays
 
     const [ goal, setGoal ] = useState({
         text: '',
@@ -21,7 +17,7 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
     })
 
     const setDate = (date) => {
-        
+
     }
 
     const setName = (text) => {
@@ -66,8 +62,8 @@ const NewGoalForm = ({onCancel, onSubmit}) => {
             </View>
 
             <View style={styles.textInputContainer}>
-                <TextInput style={styles.textInput} placeholder='What do you want to do?' placeholderTextColor={colors.grey} onChangeText={setName}/>
-                <TextInput style={styles.textInput} keyboardType='number-pad' placeholder='Set yourself a target :)'  onChangeText={setTarget} placeholderTextColor={colors.grey}/>
+                <TextInput style={styles.textInput} maxLength={40} placeholder='What do you want to do?' placeholderTextColor={colors.grey} onChangeText={setName}/>
+                <TextInput style={styles.textInput} maxLength={3} keyboardType='number-pad' placeholder='Set yourself a target :)'  onChangeText={setTarget} placeholderTextColor={colors.grey}/>
             </View>
 
             <View style={styles.optionsContainer}>

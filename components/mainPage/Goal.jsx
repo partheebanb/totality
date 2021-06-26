@@ -16,16 +16,19 @@ const Goal = ({text, completed, target, onIncrement, onDecrement, onPressOut, in
             onLongPress={() => onRemove(index)}
             delayLongPress={1600}
         >
-            <Text style={[textStyles, styles.goalText]}>{text}</Text>
+
+            <View style={styles.goalTextWrapper}>
+                <Text style={[textStyles, styles.goalText]}>{text}</Text>
+            </View>
             <View style={styles.itemProgress}>
                 <View style={styles.itemProgressTextWrapper}>
-                    <Text style={[textStyles, styles.itemProgressText, ]}>{completed}</Text>
+                    <Text style={[textStyles, styles.itemProgressText, ]}> {completed}</Text>
                 </View>
-                <View style={styles.itemProgressTextWrapper}>
+                <View style={styles.itemProgressSlash}>
                     <Text style={[styles.itemProgressText, textStyles]}> / </Text>
                 </View>
                 <View style={styles.itemProgressTextWrapper}>
-                    <Text style={[styles.itemProgressText, textStyles]}>{target}</Text>
+                    <Text style={[styles.itemProgressText, textStyles]}> {target}</Text>
                 </View>
             </View>
 
@@ -80,34 +83,35 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: 15,
-        borderRadius: 15,
-        marginVertical: 7,
-        height: 50,
+        padding: 12,
+        borderRadius: 16,
+        marginVertical: 8,
+        height: 60,
         width: '100%'
     },
+    goalTextWrapper: {
+        // width: '50%',
+        flex: 12
+    },
     goalText: {
-        fontSize: 17,
-        fontWeight: '400',
-        width: '50%',
+        fontSize: 24,
+        fontWeight: '300',
     },
     itemProgress: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: 68,
-        marginRight: 10
+        justifyContent: 'space-around',
+        flex: 4,
+        marginRight: 12,
     },
-    itemProgressTextWrapper: {
-        width: '33%'
-    },
+
     itemProgressText: {
-        fontSize: 12
+        fontSize: 16,
+        fontWeight: '300'
     },
     buttonContainer: {
-        width: 85,
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginLeft: 5
+        justifyContent: 'space-between',
+        flex: 4.5,
     },
     button: {
         height: 28,

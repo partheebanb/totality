@@ -1,48 +1,34 @@
 import React, {useState, useEffect } from 'react';
-import { StyleSheet, Text, Image, TouchableOpacity, View, ScrollView, Modal } from 'react-native';
+import { StyleSheet, Text, Image, TouchableOpacity, View, ScrollView, Modal, Pressable } from 'react-native';
 
 // import NewGoalFormik from '../components/legacy/NewGoalForm.jsx'
 import Header from '../components/mainPage/Header.jsx';
 import FrequencyBar from '../components/mainPage/FrequencyBar.jsx';
 import Goal from '../components/mainPage/Goal.jsx'
 import NewGoalForm from './NewGoalForm.jsx';
-
+import CustomIncrementModal from '../components/mainPage/CustomIncrementModal.jsx'
 
 import colors from '../assets/colors.js'
 
 const MainPage = () => {
 
   const [ goalItems, setGoalItems ] = useState([])
-  const [ finishedGoals, setFinishedGoals ] = useState(0)
   const [ showNewGoalForm, setShowNewGoalForm ] = useState(false)
   const [ currentFrequency, setCurrentFrequency ] = useState('Daily')
+  const [ showCustomIncrement, setShowCustomIncrement ] = useState(true)
 
   const switchShowNewGoalForm = () => {
     setShowNewGoalForm(!showNewGoalForm)
   }
 
-  useEffect(() => {
-    // keeps track of goals completed and total goals
-    updateGoalCount(),
-    [goalItems]
-  })
+  const switchShowCustomIncrement = () => {
+    setShowCustomIncrement(!showCustomIncrement)
+  }
 
   const addGoal = (newGoal) => {
     const goal = {...newGoal, completed: 0}
     setGoalItems([...goalItems, goal])
     switchShowNewGoalForm()
-  }
-
-  const updateGoalCount = () => {
-    let finished = 0
-    setTimeout(() => {}, 20)
-    goalItems.map((item) => {
-      if (item.completed >= item.target) {
-        finished++
-      }
-    })
-    setFinishedGoals(finished)
-
   }
 
   // increments the progress of goal at given index
@@ -92,7 +78,7 @@ const MainPage = () => {
   return (
     <View style={styles.container}>
 
-      <Header finishedGoals={finishedGoals} totalGoals={goalItems.length} goals={goalItems} frequency={currentFrequency}/>
+      <Header goals={goalItems} frequency={currentFrequency}/>
       <FrequencyBar currentFrequency={currentFrequency} setCurrentFrequency={setCurrentFrequency}/>
 
       <View style={styles.goalsContainer}>
@@ -114,7 +100,6 @@ const MainPage = () => {
                     key={index} 
                     />
                 )
-                // return <></>
               }
             })}
         </ScrollView>
@@ -123,6 +108,17 @@ const MainPage = () => {
       <Modal animationType="slide" transparent={false} visible={showNewGoalForm}>
         <NewGoalForm onCancel={switchShowNewGoalForm} onSubmit={(newGoal) => addGoal(newGoal)}/>
       </Modal>
+
+      <Modal animationType="slide" transparent={true} visible={showCustomIncrement}>
+            <CustomIncrementModal onPress={switchShowCustomIncrement}/>
+      </Modal>
+
+      {/* <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.textStyle}>Show Modal</Text>
+      </Pressable> */}
       
       <View style={styles.newGoalContainer}>
         <TouchableOpacity style={styles.newGoal} onPress={switchShowNewGoalForm} >
@@ -130,23 +126,6 @@ const MainPage = () => {
         </TouchableOpacity>
       </View>
 
-      {/* <KeyboardAvoidingView style={styles.form} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <NewGoalFormik handleAddGoal={(values) => addGoal(values)}/>
-      </KeyboardAvoidingView> */}
-
-      {/* // <View style={styles.dayContainer}>
-      //   <TouchableOpacity style={[styles.startDay, styles.day]} onTouchStart={resetGoals}>
-      //     <Text style={styles.dayText}>
-      //       START DAY
-      //     </Text>
-      //   </TouchableOpacity>
-      //   <TouchableOpacity style={[styles.endDay, styles.day]} onPress={resetGoals}>
-      //     <Text style={styles.dayText}>
-      //       END DAY
-      //     </Text> */}
-      {/* //   </TouchableOpacity>  */}
-      
-      {/* </View> */}
     </View>
   )
 }
@@ -157,37 +136,6 @@ const styles = StyleSheet.create({
     width: '100%',
     // backgroundColor:  colors.darkMode.primary,
   },
-  // dayContainer: {
-  //   width: '95%',
-  //   flexDirection: 'row',
-  //   position: 'absolute',
-  //   alignItems: 'center',
-  //   justifyContent: 'space-between',
-  //   bottom: 10,
-  //   marginHorizontal: '5%',
-  //   backgroundColor: 'white',
-  //   height: 60   
-  // },
-  // day: {
-  //   width: '47.5%',
-  //   height: 40,
-  //   // position: 'absolute',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   // marginHorizontal: '30%',
-  //   borderRadius: 10
-  // },
-  // endDay: {
-  //   backgroundColor: colors.pink.primary,
-  // },
-  // startDay: {
-  //   backgroundColor: colors.green.primary,  
-  // },
-  // dayText: {
-  //   fontSize: 24,
-  //   fontWeight: 'bold'
-  // },  
-
   goals: {
     marginTop: 10,
     marginHorizontal: '5%',

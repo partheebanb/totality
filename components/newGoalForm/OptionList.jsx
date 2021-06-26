@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { FlatList, View, } from 'react-native'
 
 import Option from './Option.jsx'
 
